@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="topbar-container">
+
+        <!-- Izquierda: logo y menú -->
+        <div class="topbar-left">
+            <img src="#{request.contextPath}/resources/img/logo.png"
+                 alt="Logo"
+                 class="topbar-logo-img" />
+
+            <ui:include src="/templates/menu.xhtml" />
+        </div>
+
+        <!-- Derecha: usuario -->
+        <div class="topbar-user">
+            <p:commandLink value="Alcides" icon="pi pi-user" />
+            <p:commandLink value="Salir" icon="pi pi-sign-out" action="#{loginBean.logout}" />
+        </div>
+    </div>
+
+</ui:composition>

@@ -1,0 +1,72 @@
+/* === GLOBAL === */
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #111;
+    color: #fff;
+    font-family: sans-serif;
+}
+
+/* === TOPBAR === */
+.topbar-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 1rem;
+    background-color: #111;
+    border-bottom: 3px solid #059142;
+    box-sizing: border-box;
+}
+
+/* Lado izquierdo: logo y menú alineados horizontalmente */
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-grow: 1;
+}
+
+/* Logo */
+.topbar-logo-img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Menú horizontal PrimeFaces */
+.ui-menubar {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Usuario (lado derecho) */
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* === CONTENIDO === */
+.main-container {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* === FOOTER === */
+.footer {
+    text-align: center;
+    padding: 1rem;
+    color: #fff;
+    background-color: #111;
+    border-top: 3px solid #059142;
+    font-size: 14px;
+    margin-top: auto;
+}
