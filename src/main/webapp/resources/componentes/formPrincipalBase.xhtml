@@ -1,0 +1,74 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:composite="http://java.sun.com/jsf/composite"
+              xmlns:comp="jakarta.faces.composite.componentes">
+
+    <composite:interface>
+        <composite:attribute name="controlador" required="true"/>
+        <composite:attribute name="nombreForma" required="true"/>
+        <composite:attribute name="dataTable" required="true"/>
+        <composite:attribute name="abmForm" required="true"/>
+        <composite:attribute name="dlgForm" required="false"/>
+        <composite:attribute name="icono" required="false" default="pi pi-list"/>
+    </composite:interface>
+
+    <composite:implementation>
+
+        <h:form id="form" style="width: 100%" enctype="multipart/form-data">
+            <p:growl id="growl" showDetail="true" life="5000" />
+
+            <!-- Título con acciones -->
+            <p:toolbar style="margin-bottom: 1rem">
+                <p:toolbarGroup align="left">
+                    <h2 style="margin: 0">
+                        <i class="#{cc.attrs.icono}" style="margin-right: 0.5rem" />
+                        #{cc.attrs.nombreForma}
+                    </h2>
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right">
+                    <!-- Botón Nuevo -->
+                    <p:commandButton icon="pi pi-plus"
+                                     value="Nuevo"
+                                     action="#{cc.attrs.controlador.nuevo}"
+                                     update="@form"
+                                     rendered="#{!cc.attrs.controlador.mostrarFormulario}" />
+
+                    <!-- Botones Formulario -->
+                    <p:commandButton icon="pi pi-save"
+                                     value="Guardar"
+                                     action="#{cc.attrs.controlador.guardar}"
+                                     update="@form growl"
+                                     rendered="#{cc.attrs.controlador.mostrarFormulario}" />
+
+                    <p:commandButton icon="pi pi-times"
+                                     value="Cancelar"
+                                     action="#{cc.attrs.controlador.cancelarEdicion}"
+                                     update="@form"
+                                     rendered="#{cc.attrs.controlador.mostrarFormulario}"
+                                     immediate="true" />
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <!-- Tabla -->
+            <p:panel id="panelTabla" rendered="#{!cc.attrs.controlador.mostrarFormulario}">
+                <ui:include src="#{cc.attrs.dataTable}" />
+            </p:panel>
+
+            <!-- Formulario -->
+            <p:panel id="panelFormulario" rendered="#{cc.attrs.controlador.mostrarFormulario}">
+                <ui:include src="#{cc.attrs.abmForm}" />
+            </p:panel>
+
+            <!-- Diálogo opcional -->
+            <ui:fragment rendered="#{not empty cc.attrs.dlgForm}">
+                <ui:include src="#{cc.attrs.dlgForm}" />
+            </ui:fragment>
+
+        </h:form>
+
+    </composite:implementation>
+</ui:component>

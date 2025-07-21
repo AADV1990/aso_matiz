@@ -1,29 +1,30 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:menubar styleClass="custom-menubar" style="background-color:#212121; border:none; padding:0.3rem 1rem;">
+    <h:form>
+        <p:menubar styleClass="custom-menubar" style="background-color:#212121; border:none; padding:0.3rem 1rem;">
+            <!-- Base -->
+            <p:submenu label="Base" icon="pi pi-cog">
+                <p:menuitem value="Usuarios" outcome="/pages/base/usuarios.xhtml" icon="pi pi-users" />
+            </p:submenu>
 
-        <!-- Base -->
-        <p:submenu label="Base" icon="pi pi-cog">
-            <p:menuitem value="Usuarios" icon="pi pi-users" disabled="true"/>
-        </p:submenu>
+            <!-- Stock -->
+            <p:submenu label="Stock" icon="pi pi-box">
+                <p:menuitem value="Artículos" icon="pi pi-tag" disabled="true"/>
+            </p:submenu>
 
-        <!-- Stock -->
-        <p:submenu label="Stock" icon="pi pi-box">
-            <p:menuitem value="Artículos" icon="pi pi-tag" disabled="true"/>
-        </p:submenu>
+            <!-- Ventas -->
+            <p:submenu label="Ventas" icon="pi pi-shopping-cart">
+                <p:menuitem value="Presupuestos" icon="pi pi-file" disabled="true"/>
+            </p:submenu>
 
-        <!-- Ventas -->
-        <p:submenu label="Ventas" icon="pi pi-shopping-cart">
-            <p:menuitem value="Presupuestos" icon="pi pi-file" disabled="true"/>
-        </p:submenu>
-
-        <!-- RRHH -->
-        <p:submenu label="RRHH" icon="pi pi-briefcase">
-            <p:menuitem value="Aportes" icon="pi pi-wallet" disabled="true"/>
-        </p:submenu>
-
-    </p:menubar>
+            <!-- RRHH -->
+            <p:submenu label="RRHH" icon="pi pi-briefcase">
+                <p:menuitem value="Aportes" icon="pi pi-wallet" disabled="true"/>
+            </p:submenu>
+        </p:menubar>
+    </h:form>
 
 </ui:composition>

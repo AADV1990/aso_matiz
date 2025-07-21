@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://jakarta.faces.html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:comp="http://java.sun.com/jsf/composite/componentes"
+                template="/templates/template.xhtml">
+
+    <ui:define name="content">
+
+        <!-- Ejecutar método reiniciarVista() al entrar -->
+        <f:metadata>
+            <f:viewAction action="#{usuarioController.reiniciarVista}" />
+        </f:metadata>
+
+        <!-- Cargar el componente con las secciones (ya incluye título y botón Nuevo) -->
+        <comp:formPrincipalBase
+                controlador="#{usuarioController}"
+                nombreForma="Gestión de Usuarios"
+                icono="pi pi-users"
+                dataTable="/pages/base/list/listUsuarios.xhtml"
+                abmForm="/pages/base/form/formUsuario.xhtml"
+                dlgForm=""
+        />
+    </ui:define>
+</ui:composition>

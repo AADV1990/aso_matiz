@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:panelGrid columns="2"
+                 columnClasses="col-3,col-9"
+                 layout="grid"
+                 styleClass="w-full ui-panelgrid-blank">
+
+        <h:outputLabel for="nombre" value="Nombre completo:" />
+        <p:inputText id="nombre"
+                     value="#{usuarioController.usuario.username}"
+                     required="true"
+                     placeholder="Ej: alcides"
+                     styleClass="w-full" />
+
+        <h:outputLabel for="clave" value="Contraseña:" />
+        <p:password id="clave"
+                    value="#{usuarioController.usuario.password}"
+                    required="true"
+                    feedback="false"
+                    styleClass="w-full" />
+
+        <h:outputLabel for="rol" value="Rol:" />
+        <p:selectOneMenu id="rol"
+                         value="#{usuarioController.idRolSeleccionado}"
+                         required="true"
+                         styleClass="w-full">
+            <f:selectItem itemLabel="Seleccione un rol" itemValue="#{null}" noSelectionOption="true" />
+            <f:selectItems value="#{usuarioController.listaRoles}"
+                           var="rol"
+                           itemLabel="#{rol.nombre_rol}"
+                           itemValue="#{rol.id}" />
+        </p:selectOneMenu>
+
+        <p:outputLabel for="activo" value="Activo" />
+        <p:selectBooleanCheckbox id="activo"
+                                 value="#{usuarioController.usuario.activo}"
+                                 styleClass="me-2" />
+
+    </p:panelGrid>
+</ui:composition>

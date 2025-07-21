@@ -3,13 +3,21 @@
                 xmlns:ui="jakarta.faces.facelets"
                 xmlns:h="jakarta.faces.html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="jakarta.faces.core">   <!-- 💡 ESTA ES LA CLAVE -->
+                xmlns:f="jakarta.faces.core">
 
     <ui:define name="content">
+
+        <f:metadata>
+            <f:viewAction action="#{dashboardController.init}" />
+        </f:metadata>
+
         <p:card style="margin:2rem; padding:2rem;">
             <f:facet name="title">
-                <h:outputText value="👋 Bienvenido, Alcides" />
+                <h:outputText
+                        rendered="#{not empty loginController.usuarioLogueado}"
+                        value="👋 Bienvenido, #{loginController.usuarioLogueado.nombre} #{loginController.usuarioLogueado.apellido} — #{dashboardController.fechaActualFormateada}" />
             </f:facet>
+
             <h:outputText value="El sistema de la Asociación de Empleados está listo para usarse." />
         </p:card>
 

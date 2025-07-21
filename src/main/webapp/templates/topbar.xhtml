@@ -7,18 +7,33 @@
 
         <!-- Izquierda: logo y menú -->
         <div class="topbar-left">
-            <img src="#{request.contextPath}/resources/img/logo.png"
-                 alt="Logo"
-                 class="topbar-logo-img" />
+            <h:link outcome="/pages/dashboard.xhtml">
+                <img src="#{request.contextPath}/resources/img/logo.png"
+                     alt="Logo"
+                     class="topbar-logo-img"/>
 
-            <ui:include src="/templates/menu.xhtml" />
+            </h:link>
+            <ui:include src="/templates/menu.xhtml"/>
         </div>
 
         <!-- Derecha: usuario -->
         <div class="topbar-user">
-            <p:commandLink value="Alcides" icon="pi pi-user" />
-            <p:commandLink value="Salir" icon="pi pi-sign-out" action="#{loginBean.logout}" />
+            <h:form>
+                <p:menubar styleClass="border-none shadow-none" style="background: transparent;">
+                    <p:submenu label="#{loginController.usuarioLogueado.username}" icon="pi pi-user">
+                        <p:menuitem value="Perfil" icon="pi pi-id-card" url="#"/>
+                        <p:menuitem value="Cambiar Contraseña" icon="pi pi-lock" url="#"/>
+                        <p:divider/>
+                        <p:menuitem value="Cerrar Sesión"
+                                    icon="pi pi-sign-out"
+                                    action="#{loginController.logout}"
+                                    ajax="false"/>
+
+                    </p:submenu>
+                </p:menubar>
+            </h:form>
         </div>
+
     </div>
 
 </ui:composition>

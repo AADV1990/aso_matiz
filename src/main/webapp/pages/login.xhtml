@@ -1,0 +1,52 @@
+<ui:composition template="/templates/template_login.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!-- 🔒 Esta parte redirige al dashboard si ya hay sesión activa -->
+    <f:metadata>
+        <f:viewAction action="#{loginController.redirigirSiYaEstaLogueado}" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form prependId="false">
+            <p:growl id="growl" showDetail="true" life="4000" position="top-right" />
+            <p:panel header="Inicio de sesión" style="width: 400px;">
+
+
+                <p:panelGrid columns="2"
+                             columnClasses="label,value"
+                             styleClass="ui-panelgrid-blank"
+                             style="width: 100%; vertical-align: middle;">
+
+                    <h:outputLabel for="username" value="Usuario:" />
+                    <p:inputText id="username"
+                                 value="#{loginController.username}"
+                                 required="true"
+                                 label="Usuario"
+                                 placeholder="Ingrese su usuario" />
+
+                    <h:outputLabel for="password" value="Contraseña:" />
+                    <p:password id="password"
+                                value="#{loginController.password}"
+                                required="true"
+                                label="Contraseña"
+                                feedback="false"
+                                placeholder="********" />
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <p:commandButton value="Ingresar"
+                                 icon="pi pi-sign-in"
+                                 action="#{loginController.login}"
+                                 update="growl username password"
+                                 styleClass="ui-button-primary"
+                                 style="width: 100%;" />
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

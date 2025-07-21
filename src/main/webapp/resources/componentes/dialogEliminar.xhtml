@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://jakarta.faces.html"
+                xmlns:f="http://jakarta.faces.core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+
+    <cc:interface>
+        <cc:attribute name="bean" required="true" /> <!-- #{usuarioController} -->
+        <cc:attribute name="metodoEliminar" required="true" /> <!-- #{usuarioController.eliminar} -->
+        <cc:attribute name="widgetVar" required="true" /> <!-- dlgEliminarUsuario -->
+    </cc:interface>
+
+    <cc:implementation>
+        <p:confirmDialog widgetVar="#{cc.attrs.widgetVar}"
+                         header="Confirmar Eliminación"
+                         message="¿Está seguro que desea eliminar este registro?"
+                         showEffect="fade" hideEffect="fade"
+                         severity="warn" closable="false"
+                         responsive="true">
+
+            <p:commandButton value="Sí"
+                             icon="pi pi-check"
+                             action="#{cc.attrs.metodoEliminar}"
+                             update="@form"
+                             oncomplete="PF('#{cc.attrs.widgetVar}').hide()"
+                             process="@this"
+                             styleClass="ui-button-danger" />
+
+            <p:commandButton value="No"
+                             icon="pi pi-times"
+                             onclick="PF('#{cc.attrs.widgetVar}').hide(); return false;"
+                             styleClass="ui-button-secondary" />
+        </p:confirmDialog>
+    </cc:implementation>
+</ui:composition>

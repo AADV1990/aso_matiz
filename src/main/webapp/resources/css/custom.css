@@ -70,3 +70,41 @@ html, body {
     font-size: 14px;
     margin-top: auto;
 }
+
+/* === LOGIN === */
+.login-container {
+    padding: 2rem;
+    border-radius: 12px;
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Centrar verticalmente las celdas de p:panelGrid */
+.ui-panelgrid td {
+    vertical-align: middle;
+}
+
+.ui-panelgrid .label {
+    text-align: right;
+    padding-right: 1rem;
+    width: 30%;
+}
+
+.ui-panelgrid .value {
+    width: 70%;
+}
+
+.ui-growl .ui-growl-item-container.ui-growl-error {
+    background-color: #2f1c1c !important;
+    color: #fff !important;
+    border-left: 5px solid #ff5252 !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.cabecera-container h2 {
+    font-weight: 600;
+    color: #ffffff; /* ajustable al tema */
+}
+
+.cabecera-container .acciones .ui-button {
+    margin-left: 0.5rem;
+}

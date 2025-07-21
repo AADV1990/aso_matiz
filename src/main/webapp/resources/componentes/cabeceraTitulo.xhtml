@@ -1,0 +1,27 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+        <composite:attribute name="titulo" required="true" />
+        <composite:attribute name="icono" required="false" default="pi pi-list" />
+    </composite:interface>
+
+    <composite:implementation>
+
+        <div class="cabecera-contenedor" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0.5rem;">
+            <div class="cabecera-izquierda" style="display: flex; align-items: center;">
+                <i class="#{cc.attrs.icono}" style="margin-right: 0.5rem; font-size: 1.2rem;"></i>
+                <h2 style="margin: 0; font-size: 1.5rem;">#{cc.attrs.titulo}</h2>
+            </div>
+            <div class="cabecera-derecha" style="display: flex; gap: 0.5rem;">
+                <composite:insertFacet name="acciones" />
+            </div>
+        </div>
+
+        <hr style="border: none; border-top: 2px solid #4caf50; margin: 0 0 1rem 0;" />
+
+    </composite:implementation>
+</ui:component>
