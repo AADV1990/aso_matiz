@@ -17,7 +17,7 @@ public class Persona implements Serializable {
     @Column(name = "tipo_documento", length = 10)
     private String tipoDocumento;
     @Column(name = "numero_documento", length = 20)
-    private String nroDocuemnto;
+    private String nroDocumento;
     @Column(name = "nombres", length = 100)
     private String nombres;
     @Column(name = "apellidos", length = 100)
@@ -51,12 +51,12 @@ public class Persona implements Serializable {
         this.tipoDocumento = tipoDocumento;
     }
 
-    public String getNroDocuemnto() {
-        return nroDocuemnto;
+    public String getNroDocumento() {
+        return nroDocumento;
     }
 
-    public void setNroDocuemnto(String nroDocuemnto) {
-        this.nroDocuemnto = nroDocuemnto;
+    public void setNroDocumento(String nroDocuemnto) {
+        this.nroDocumento = nroDocumento;
     }
 
     public String getNombres() {

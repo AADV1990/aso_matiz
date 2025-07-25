@@ -48,18 +48,20 @@ public class UsuarioDAO {
 
 
     public List<Usuario> listarTodos() {
-        List<Usuario> usuarios = em.createQuery("SELECT u FROM Usuario u", Usuario.class)
+        return em.createQuery(
+                        "SELECT u FROM Usuario u LEFT JOIN FETCH u.rol LEFT JOIN FETCH u.persona",
+                        Usuario.class)
                 .getResultList();
-
-        for (Usuario u : usuarios) {
-            initializeLazy(u.getRol());
-        }
-
-        return usuarios;
     }
+
 
     public List<RolUsuario> listarRoles() {
         return em.createQuery("SELECT r FROM RolUsuario r", RolUsuario.class)
                 .getResultList();
     }
+
+    public Usuario buscarPorId(Long id) {
+        return em.find(Usuario.class, id);
+    }
+
 }

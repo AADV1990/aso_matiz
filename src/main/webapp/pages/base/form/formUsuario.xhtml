@@ -4,41 +4,68 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:panelGrid columns="2"
-                 columnClasses="col-3,col-9"
-                 layout="grid"
-                 styleClass="w-full ui-panelgrid-blank">
+    <div class="formulario-grid grid ui-fluid">
 
-        <h:outputLabel for="nombre" value="Nombre completo:" />
-        <p:inputText id="nombre"
-                     value="#{usuarioController.usuario.username}"
-                     required="true"
-                     placeholder="Ej: alcides"
-                     styleClass="w-full" />
-
-        <h:outputLabel for="clave" value="Contraseña:" />
-        <p:password id="clave"
-                    value="#{usuarioController.usuario.password}"
-                    required="true"
-                    feedback="false"
-                    styleClass="w-full" />
-
-        <h:outputLabel for="rol" value="Rol:" />
-        <p:selectOneMenu id="rol"
-                         value="#{usuarioController.idRolSeleccionado}"
+        <!-- Nombre de usuario -->
+        <div class="col-12 md:col-6">
+            <p:outputLabel for="nombre" value="Nombre de Usuario *" />
+            <p:inputText id="nombre"
+                         value="#{usuarioController.usuario.username}"
                          required="true"
-                         styleClass="w-full">
-            <f:selectItem itemLabel="Seleccione un rol" itemValue="#{null}" noSelectionOption="true" />
-            <f:selectItems value="#{usuarioController.listaRoles}"
-                           var="rol"
-                           itemLabel="#{rol.nombre_rol}"
-                           itemValue="#{rol.id}" />
-        </p:selectOneMenu>
+                         placeholder="Ej: alcides"
+                         styleClass="w-full" />
+        </div>
 
-        <p:outputLabel for="activo" value="Activo" />
-        <p:selectBooleanCheckbox id="activo"
-                                 value="#{usuarioController.usuario.activo}"
-                                 styleClass="me-2" />
+        <!-- Contraseña -->
+        <div class="col-12 md:col-6">
+            <p:outputLabel for="clave" value="Contraseña *" />
+            <p:password id="clave"
+                        value="#{usuarioController.usuario.password}"
+                        feedback="false"
+                        styleClass="w-full"
+                        required="#{usuarioController.usuario.id == null}" />
+        </div>
 
-    </p:panelGrid>
+        <!-- Rol -->
+        <div class="col-12 md:col-6">
+            <p:outputLabel for="rol" value="Rol *" />
+            <p:selectOneMenu id="rol"
+                             value="#{usuarioController.idRolSeleccionado}"
+                             required="true"
+                             styleClass="w-full">
+                <f:selectItem itemLabel="Seleccione un rol" itemValue="#{null}" noSelectionOption="true" />
+                <f:selectItems value="#{usuarioController.listaRoles}"
+                               var="rol"
+                               itemLabel="#{rol.nombre_rol}"
+                               itemValue="#{rol.id}" />
+            </p:selectOneMenu>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <p:outputLabel value="Persona *" for="personaInput" />
+            <div class="ui-inputgroup">
+                <p:inputText id="personaInput"
+                             value="#{usuarioController.usuario.persona.nombres}"
+                             readonly="true"
+                             styleClass="w-full"/>
+                <p:commandButton icon="pi pi-search"
+                                 title="Buscar persona"
+                                 oncomplete="PF('dlgSeleccionarPersona').show()"
+                                 process="@this"
+                                 update="@none"/>
+            </div>
+        </div>
+
+
+
+        <!-- Activo -->
+        <div class="col-12 md:col-6">
+            <p:outputLabel for="activo" value="Activo" />
+            <p:selectBooleanCheckbox id="activo"
+                                     value="#{usuarioController.usuario.activo}"
+                                     styleClass="me-2" />
+        </div>
+
+    </div>
+
 </ui:composition>

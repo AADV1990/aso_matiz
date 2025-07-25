@@ -5,7 +5,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:comp="http://java.sun.com/jsf/composite/componentes">
 
-    <p:dataTable value="#{usuarioController.listaUsuarios}"
+
+<p:dataTable value="#{usuarioController.listaUsuarios}"
                  var="u"
                  paginator="true"
                  rows="10"
@@ -15,7 +16,9 @@
                  styleClass="ui-datatable-sm"
                  emptyMessage="No hay usuarios registrados.">
 
-        <p:column headerText="Nombre">
+        <p:column headerText="Nombre"
+                  filterBy="#{u.username}"
+                  filterMatchMode="contains">
             <h:outputText value="#{u.username}"/>
         </p:column>
 
@@ -25,21 +28,25 @@
             <h:outputText value="#{u.username}"/>
         </p:column>
 
+        <p:column headerText="Persona"
+                  filterBy="#{u.persona.nombres}"
+                  filterMatchMode="contains">
+            <h:outputText value="#{u.persona != null ? u.persona.nombres.concat(' ').concat(u.persona.apellidos) : 'Sin asignar'}"/>
+        </p:column>
+
         <p:column headerText="Rol"
                   filterBy="#{u.rol.nombre_rol}"
                   filterMatchMode="contains">
             <h:outputText value="#{u.rol.nombre_rol}"/>
         </p:column>
 
-        <!-- Filtro por Estado con dropdown -->
         <p:column headerText="Estado"
                   filterBy="#{u.activo}"
                   filterMatchMode="exact"
                   filterOptions="#{usuarioController.opcionesEstado}">
             <p:badge value="#{u.activo ? 'Activo' : 'Inactivo'}"
-                     severity="#{u.activo ? 'success' : 'danger'}" />
+                     severity="#{u.activo ? 'success' : 'danger'}"/>
         </p:column>
-
 
         <p:column headerText="Acciones" style="text-align: right; width: 130px;">
             <p:commandButton icon="pi pi-pencil"
@@ -59,10 +66,9 @@
         </p:column>
     </p:dataTable>
 
-    <!-- Incluir diálogo de confirmación al final -->
+    <!-- Diálogo de confirmación reutilizable -->
     <comp:dialogEliminar
             bean="#{usuarioController}"
             metodoEliminar="#{usuarioController.eliminar}"
             widgetVar="dlgEliminarUsuario"/>
-
 </ui:composition>

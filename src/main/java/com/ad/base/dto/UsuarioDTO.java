@@ -2,7 +2,7 @@ package com.ad.base.dto;
 
 import java.io.Serializable;
 
-public class UsuarioDTO implements Serializable {
+public class    UsuarioDTO implements Serializable {
 
     private String username;
     private String nombre;

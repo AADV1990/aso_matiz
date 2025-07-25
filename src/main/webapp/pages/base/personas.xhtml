@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://jakarta.faces.html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:comp="http://java.sun.com/jsf/composite/componentes"
+                template="/templates/template.xhtml">
+
+    <ui:define name="content">
+
+        <!-- SOLUCIÓN: incluir <f:view> aquí -->
+        <f:view>
+
+            <!-- Ejecutar método reiniciarVista() al entrar -->
+            <f:metadata>
+                <f:viewAction action="#{personaController.reiniciarVista()}" />
+            </f:metadata>
+
+            <!-- Cargar el componente con las secciones (título, nuevo, datatable, formulario) -->
+            <comp:formPrincipalBase
+                    id="formulario"
+                    controlador="#{personaController}"
+                    nombreForma="Gestión de Personas"
+                    icono="pi pi-users"
+                    dataTable="/pages/base/list/listPersonas.xhtml"
+                    abmForm="/pages/base/form/formPersona.xhtml"
+                    dlgForm=""
+            />
+
+        </f:view>
+    </ui:define>
+</ui:composition>

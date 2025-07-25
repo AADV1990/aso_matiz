@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://jakarta.faces.html"
+                xmlns:f="http://jakarta.faces.core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dataTable id="tablaPersona"
+                 value="#{personaController.lista}"
+                 var="persona"
+                 selection="#{personaController.entidad}"
+                 rowKey="#{persona.idPersona}"
+                 selectionMode="single"
+                 paginator="true"
+                 rows="10"
+                 paginatorPosition="bottom"
+                 responsiveLayout="scroll">
+
+        <!-- Selección por fila -->
+        <p:ajax event="rowSelect"
+                listener="#{personaController.seleccionar}"
+                update="@form" />
+
+        <p:column headerText="Documento"
+                  sortBy="#{persona.nroDocumento}"
+                  filterBy="#{persona.nroDocumento}"
+                  filterMatchMode="contains">
+            #{persona.nroDocumento}
+        </p:column>
+
+        <p:column headerText="Nombre"
+                  sortBy="#{persona.nombres}"
+                  filterBy="#{persona.nombres}"
+                  filterMatchMode="contains">
+            #{persona.nombres}
+        </p:column>
+
+        <p:column headerText="Apellidos"
+                  sortBy="#{persona.apellidos}"
+                  filterBy="#{persona.apellidos}"
+                  filterMatchMode="contains">
+            #{persona.apellidos}
+        </p:column>
+
+        <p:column headerText="Dirección"
+                  sortBy="#{persona.direccion}"
+                  filterBy="#{persona.direccion}"
+                  filterMatchMode="contains">
+            #{persona.direccion}
+        </p:column>
+
+        <p:column headerText="Email"
+                  sortBy="#{persona.email}"
+                  filterBy="#{persona.email}"
+                  filterMatchMode="contains">
+            #{persona.email}
+        </p:column>
+
+        <!-- Acciones -->
+        <p:column headerText="Acciones" style="text-align: right; width: 130px;">
+            <p:commandButton icon="pi pi-pencil"
+                             action="#{personaController.prepararEdicion(persona)}"
+                             update="@form"
+                             title="Editar"
+                             styleClass="ui-button-warning ui-button-flat me-1"
+                             process="@this" />
+
+            <p:commandButton icon="pi pi-trash"
+                             title="Eliminar"
+                             actionListener="#{personaController.prepararEliminacion(persona)}"
+                             update="@form"
+                             oncomplete="PF('dlgEliminarPersona').show()"
+                             process="@this"
+                             styleClass="ui-button-danger ui-button-flat" />
+        </p:column>
+    </p:dataTable>
+
+    <!-- Diálogo de confirmación -->
+    <p:confirmDialog widgetVar="dlgEliminarPersona"
+                     showEffect="fade"
+                     header="Confirmar eliminación"
+                     message="¿Está seguro que desea eliminar a #{personaController.personaSeleccionadaParaEliminar.nombres} #{personaController.personaSeleccionadaParaEliminar.apellidos}?"
+                     severity="warn"
+                     styleClass="text-center">
+
+        <p:commandButton value="Sí, eliminar"
+                         icon="pi pi-check"
+                         action="#{personaController.eliminar}"
+                         update="@form"
+                         oncomplete="PF('dlgEliminarPersona').hide()"
+                         styleClass="ui-button-danger" />
+
+        <p:commandButton value="Cancelar"
+                         icon="pi pi-times"
+                         onclick="PF('dlgEliminarPersona').hide()"
+                         type="button"
+                         styleClass="ui-button-secondary" />
+    </p:confirmDialog>
+
+</ui:composition>

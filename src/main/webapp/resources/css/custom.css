@@ -108,3 +108,41 @@ html, body {
 .cabecera-container .acciones .ui-button {
     margin-left: 0.5rem;
 }
+
+/* Compactar el tamaño del calendario emergente */
+.compacto-datepicker .p-datepicker {
+    font-size: 0.85rem;
+    transform: scale(0.85);
+    transform-origin: top left;
+}
+
+/* para achicar el formulario de perosnas*/
+/* Centrar el formulario y limitar ancho */
+.contenido-centrado {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Espaciado interno en inputs */
+.formulario-grid .p-inputtext,
+.formulario-grid .p-selectonemenu {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+/* Alineación vertical para todos los campos */
+.formulario-grid .p-inputtext,
+.formulario-grid .p-datepicker,
+.formulario-grid .p-selectonemenu {
+    min-height: 2.5rem;
+}
+
+/* Compactar el label */
+.formulario-grid label {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+
+

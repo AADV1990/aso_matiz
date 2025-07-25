@@ -45,6 +45,9 @@ public class UsuarioService implements Serializable {
         usuarioDAO.eliminar(usuario);
     }
 
+    public Usuario buscarPorId(Long id) {
+        return usuarioDAO.buscarPorId(id);
+    }
 
 
 }

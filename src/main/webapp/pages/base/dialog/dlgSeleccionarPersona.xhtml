@@ -1,0 +1,49 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://jakarta.faces.html"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog header="Seleccionar Persona"
+              widgetVar="dlgSeleccionarPersona"
+              modal="true"
+              width="800"
+              height="500"
+              resizable="false">
+
+        <p:dataTable value="#{personaController.lista}"
+                     var="p"
+                     selectionMode="single"
+                     selection="#{personaController.seleccionado}"
+                     rowKey="#{p.idPersona}"
+                     paginator="true"
+                     rows="10"
+                     paginatorPosition="bottom"
+                     rowsPerPageTemplate="5,10,20"
+                     responsiveLayout="scroll"
+                     styleClass="mt-2">
+
+            <p:column headerText="ID" sortBy="#{p.idPersona}">
+                #{p.idPersona}
+            </p:column>
+
+            <p:column headerText="Nombre" filterBy="#{p.nombres}" filterMatchMode="contains">
+                #{p.nombres} #{p.apellidos}
+            </p:column>
+
+            <p:column headerText="Documento" filterBy="#{p.nroDocumento}" filterMatchMode="contains">
+                #{p.nroDocumento}
+            </p:column>
+        </p:dataTable>
+
+        <f:facet name="footer">
+            <p:commandButton value="Seleccionar"
+                             icon="pi pi-check"
+                             action="#{personaController.seleccionarPersonaDesdeDialogo}"
+                             update="@form"
+                             oncomplete="PF('dlgSeleccionarPersona').hide()" />
+        </f:facet>
+
+    </p:dialog>
+
+</ui:fragment>

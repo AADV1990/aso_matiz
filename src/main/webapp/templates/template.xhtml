@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="jakarta.faces.facelets"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
 
 <h:head>
     <title>Asociación de Empleados</title>
     <meta charset="UTF-8" />
     <h:outputStylesheet library="css" name="custom.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.3.1/primeflex.min.css" />
 </h:head>
 
 <h:body>
+    <f:view>
+        <ui:include src="/templates/topbar.xhtml" />
 
-    <ui:include src="/templates/topbar.xhtml" />
+        <div class="page-content">
+            <ui:insert name="content" />
+        </div>
 
-    <div class="page-content">
-        <ui:insert name="content" />
-    </div>
-
-    <ui:include src="/templates/footer.xhtml" />
-
+        <ui:include src="/templates/footer.xhtml" />
+    </f:view>
 </h:body>
 </html>

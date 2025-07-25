@@ -60,7 +60,10 @@
 
             <!-- Formulario -->
             <p:panel id="panelFormulario" rendered="#{cc.attrs.controlador.mostrarFormulario}">
-                <ui:include src="#{cc.attrs.abmForm}" />
+                <div class="card contenido-centrado">
+                    <h2 class="mb-4">#{cc.attrs.nombreForma}</h2>
+                    <ui:include src="#{cc.attrs.abmForm}" />
+                </div>
             </p:panel>
 
             <!-- Diálogo opcional -->

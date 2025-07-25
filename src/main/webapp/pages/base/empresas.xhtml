@@ -10,16 +10,16 @@
 
         <!-- Ejecutar método reiniciarVista() al entrar -->
         <f:metadata>
-            <f:viewAction action="#{usuarioController.reiniciarVista}" />
+            <f:viewAction action="#{empresaController.reiniciarVista()}" />
         </f:metadata>
 
         <!-- Cargar el componente con las secciones (ya incluye título y botón Nuevo) -->
         <comp:formPrincipalBase
-                controlador="#{usuarioController}"
-                nombreForma="Gestión de Usuarios"
+                controlador="#{empresaController}"
+                nombreForma="Gestión de Empresas"
                 icono="pi pi-users"
-                dataTable="/pages/base/list/listUsuarios.xhtml"
-                abmForm="/pages/base/form/formUsuario.xhtml"
+                dataTable="/pages/base/list/listEmpresas.xhtml"
+                abmForm="/pages/base/form/formEmpresa.xhtml"
                 dlgForm="/pages/base/dialog/dlgSeleccionarPersona.xhtml"/>
     </ui:define>
 </ui:composition>
