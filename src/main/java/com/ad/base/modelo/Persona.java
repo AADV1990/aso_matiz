@@ -55,7 +55,7 @@ public class Persona implements Serializable {
         return nroDocumento;
     }
 
-    public void setNroDocumento(String nroDocuemnto) {
+    public void setNroDocumento(String nroDocumento) {
         this.nroDocumento = nroDocumento;
     }
 
