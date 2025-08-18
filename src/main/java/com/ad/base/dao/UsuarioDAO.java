@@ -8,7 +8,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 
-import static com.ad.util.HibernateUtil.initializeLazy;
+
 
 @Stateless
 public class UsuarioDAO {

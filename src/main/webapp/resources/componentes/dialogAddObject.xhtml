@@ -1,0 +1,38 @@
+<ui:component
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <cc:interface>
+        <cc:attribute name="header" required="true" />
+        <cc:attribute name="widgetVar" required="true" />
+        <cc:attribute name="controlador" required="true" />
+        <cc:attribute name="abmForm" required="true" />
+        <!-- opcionales -->
+        <cc:attribute name="modal" default="true" />
+        <cc:attribute name="width" default="900" />
+        <cc:attribute name="resizable" default="false" />
+        <cc:attribute name="maximizable" default="true" />
+    </cc:interface>
+
+    <cc:implementation>
+        <p:dialog
+                header="#{cc.attrs.header}"
+                widgetVar="#{cc.attrs.widgetVar}"
+                modal="#{cc.attrs.modal}"
+                appendTo="@(body)"
+                responsive="true"
+                resizable="#{cc.attrs.resizable}"
+                maximizable="#{cc.attrs.maximizable}"
+                width="#{cc.attrs.width}">
+
+            <!-- Exponer el controlador al form incluido (opcional si usas #{empresaController} directo) -->
+            <ui:param name="controlador" value="#{cc.attrs.controlador}" />
+
+            <!-- Incluir el formulario (SIN p:dialog adentro) -->
+            <ui:include src="#{cc.attrs.abmForm}" />
+        </p:dialog>
+    </cc:implementation>
+</ui:component>

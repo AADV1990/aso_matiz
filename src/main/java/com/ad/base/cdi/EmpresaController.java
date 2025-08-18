@@ -16,7 +16,6 @@ import java.util.List;
 @Named
 @ViewScoped
 public class EmpresaController extends AbstractControllerGenerico<Empresa> implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     private Boolean filtroActivo;
@@ -43,9 +42,11 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
         setModoEdicion(false);
         empresaSeleccionadaParaEliminar = null;
 
-        // Cargar la lista de personas para el diálogo
-        personaController.setLista(null);
-//        personaController.setLista(personaController.getPersonaService().getActivos());
+        // Cargar la lista de personas para el diálogo;
+        // no limpiar la lista a null sino invocar reiniciarVista() del PersonaController
+        if (personaController != null) {
+            personaController.reiniciarVista();
+        }
     }
 
     @Override
@@ -55,7 +56,7 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
 
     @Override
     public void antesABM(EnumAccionABM accion) {
-        // Por ahora vacío
+        // Validaciones previas (en caso de necesitarlas)
     }
 
     @Override
@@ -91,7 +92,8 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
     }
 
     public void seleccionarPersonaDesdeDialogo() {
-        this.entidad.setRepresentanteLegal(personaController.getSeleccionado());
+        this.entidad.setRepresentanteLegal(personaController.getPersonaSeleccionada());
+
     }
 
     public void nuevo() {
@@ -105,8 +107,7 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
         return representante != null ? representante.getNombres() : "";
     }
 
-
-    // Getters y Setters
+    /* ======== Getters y Setters que siguen siendo necesarios ======== */
 
     public Empresa getEmpresaSeleccionadaParaEliminar() {
         return empresaSeleccionadaParaEliminar;

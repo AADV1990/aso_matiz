@@ -7,56 +7,63 @@
     <div class="formulario-grid grid ui-fluid">
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="tipoDoc" value="Tipo de Documento" />
-            <p:inputText id="tipoDoc" value="#{personaController.entidad.tipoDocumento}" />
+            <p:outputLabel for="tipoDoc" value="Tipo de Documento"/>
+            <p:selectOneMenu id="tipoDoc" value="#{personaController.entidad.tipoDocumento}">
+            <f:selectItem itemLabel="Seleccione" itemValue=""/>
+            <f:selectItem itemLabel="Cedula de Identidad" itemValue="C.I"/>
+            <f:selectItem itemLabel="RUC" itemValue="RUC"/>
+            <f:selectItem itemLabel="Pasaporte" itemValue="PASAPORTE"/>
+            </p:selectOneMenu>
+
+
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="nroDoc" value="Número de Documento *" />
-            <p:inputText id="nroDoc" value="#{personaController.entidad.nroDocumento}" required="true" />
+            <p:outputLabel for="nroDoc" value="Número de Documento *"/>
+            <p:inputText id="nroDoc" value="#{personaController.entidad.nroDocumento}" required="true"/>
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="nombres" value="Nombres *" />
-            <p:inputText id="nombres" value="#{personaController.entidad.nombres}" required="true" />
+            <p:outputLabel for="nombres" value="Nombres *"/>
+            <p:inputText id="nombres" value="#{personaController.entidad.nombres}" required="true"/>
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="apellidos" value="Apellidos *" />
-            <p:inputText id="apellidos" value="#{personaController.entidad.apellidos}" required="true" />
+            <p:outputLabel for="apellidos" value="Apellidos *"/>
+            <p:inputText id="apellidos" value="#{personaController.entidad.apellidos}" required="true"/>
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="fechaNac" value="Fecha de Nacimiento" />
+            <p:outputLabel for="fechaNac" value="Fecha de Nacimiento"/>
             <p:datePicker id="fechaNac"
                           value="#{personaController.entidad.fechaNacimiento}"
                           showIcon="true"
                           styleClass="w-full compacto-datepicker"
-                          inputStyle="width: 100%;" />
+                          inputStyle="width: 100%;"/>
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="genero" value="Género" />
+            <p:outputLabel for="genero" value="Género"/>
             <p:selectOneMenu id="genero" value="#{personaController.entidad.genero}">
-                <f:selectItem itemLabel="Seleccione" itemValue="" />
-                <f:selectItem itemLabel="Masculino" itemValue="M" />
-                <f:selectItem itemLabel="Femenino" itemValue="F" />
+                <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                <f:selectItem itemLabel="Femenino" itemValue="F"/>
             </p:selectOneMenu>
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="direccion" value="Dirección" />
-            <p:inputText id="direccion" value="#{personaController.entidad.direccion}" />
+            <p:outputLabel for="direccion" value="Dirección"/>
+            <p:inputText id="direccion" value="#{personaController.entidad.direccion}"/>
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="telefono" value="Teléfono" />
-            <p:inputText id="telefono" value="#{personaController.entidad.telefono}" />
+            <p:outputLabel for="telefono" value="Teléfono"/>
+            <p:inputText id="telefono" value="#{personaController.entidad.telefono}"/>
         </div>
 
         <div class="col-12 md:col-6">
-            <p:outputLabel for="email" value="Email" />
-            <p:inputText id="email" value="#{personaController.entidad.email}" />
+            <p:outputLabel for="email" value="Email"/>
+            <p:inputText id="email" value="#{personaController.entidad.email}"/>
         </div>
 
     </div>

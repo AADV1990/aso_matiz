@@ -6,13 +6,12 @@
                 xmlns:comp="http://java.sun.com/jsf/composite/componentes"
                 template="/templates/template.xhtml">
 
+    <!-- Ejecutar método reiniciarVista() al entrar -->
+    <f:metadata>
+        <f:viewAction action="#{usuarioController.reiniciarVista}" />
+    </f:metadata>
+
     <ui:define name="content">
-
-        <!-- Ejecutar método reiniciarVista() al entrar -->
-        <f:metadata>
-            <f:viewAction action="#{usuarioController.reiniciarVista}" />
-        </f:metadata>
-
         <!-- Cargar el componente con las secciones (ya incluye título y botón Nuevo) -->
         <comp:formPrincipalBase
                 controlador="#{usuarioController}"

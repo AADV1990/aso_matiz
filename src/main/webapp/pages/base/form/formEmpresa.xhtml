@@ -1,48 +1,64 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <div class="formulario-grid grid ui-fluid">
+    <h:form id="formEmpresa">
 
-        <div class="col-12 md:col-6">
-            <p:outputLabel for="razonSo" value="Razón Social"/>
-            <p:inputText id="razonSo" value="#{empresaController.entidad.razonSocial}"/>
-        </div>
+        
+        <f:metadata>
+            <f:viewAction action="#{empresaController.reiniciarVista()}"/>
+        </f:metadata>
 
-        <div class="col-12 md:col-6">
-            <p:outputLabel for="ruc" value="RUC"/>
-            <p:inputText id="ruc" value="#{empresaController.entidad.ruc}"/>
-        </div>
+        <h:panelGroup>
+            <h:outputText value="Formulario de Empresa" styleClass="text-2xl font-bold mb-4"/>
+        </h:panelGroup>
 
-        <div class="col-12 md:col-6">
-            <p:outputLabel for="dire" value="Dirección"/>
-            <p:inputText id="dire" value="#{empresaController.entidad.direccion}"/>
-        </div>
+        <div class="formulario-grid grid ui-fluid">
 
-        <div class="col-12 md:col-6">
-            <p:outputLabel for="tel" value="Teléfono"/>
-            <p:inputText id="tel" value="#{empresaController.entidad.telefono}"/>
-        </div>
+            <div class="col-12 md:col-6">
+                <p:outputLabel for="razonSo" value="Razón Social"/>
+                <p:inputText id="razonSo" value="#{empresaController.entidad.razonSocial}"/>
+            </div>
 
-        <div class="col-12 md:col-6">
-            <p:outputLabel value="Persona *" for="personaInput"/>
-            <div class="ui-inputgroup">
-                <p:inputText id="personaInput"
-                             value="#{empresaController.nombreRepresentante}"
-                             readonly="true"
-                             styleClass="w-full"/>
-                <p:commandButton icon="pi pi-search"
-                                 title="Buscar persona"
-                                 oncomplete="PF('dlgSeleccionarPersona').show()"
-                                 process="@this"
-                                 update="@none"/>
+            <div class="col-12 md:col-6">
+                <p:outputLabel for="ruc" value="RUC"/>
+                <p:inputText id="ruc" value="#{empresaController.entidad.ruc}"/>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <p:outputLabel for="dire" value="Dirección"/>
+                <p:inputText id="dire" value="#{empresaController.entidad.direccion}"/>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <p:outputLabel for="tel" value="Teléfono"/>
+                <p:inputText id="tel" value="#{empresaController.entidad.telefono}"/>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <p:outputLabel value="Persona *" for="personaInput"/>
+                <div class="ui-inputgroup">
+                    <!-- ✅ con widgetVar para actualizar desde el diálogo -->
+                    <p:inputText id="personaInput"
+                                 widgetVar="wPersonaInput"
+                                 value="#{empresaController.nombreRepresentante}"
+                                 readonly="true"
+                                 styleClass="w-full"/>
+
+                    <!-- ✅ abre el diálogo correcto y marca origen -->
+                    <p:commandButton icon="pi pi-search"
+                                     title="Buscar persona"
+                                     action="#{personaController.setFormularioOrigen(':abmForm:formEmpresa')}"
+                                     oncomplete="PF('dlgSeleccionarPersona').show()"
+                                     process="@this" update="@none">
+                        <f:setPropertyActionListener value="#{empresaController}"
+                                                     target="#{personaController.origen}" />
+                    </p:commandButton>
+                </div>
             </div>
         </div>
-
-
-    </div>
 
         <div class="col-12 md:col-6">
             <p:outputLabel for="activo" value="Activo"/>
@@ -50,47 +66,5 @@
                                      value="#{empresaController.entidad.activo}"
                                      styleClass="me-2"/>
         </div>
-
-
-
-<!--    &lt;!&ndash; ✅ Diálogo de selección de persona para empresa &ndash;&gt;-->
-<!--    <p:dialog header="Seleccionar Persona"-->
-<!--              widgetVar="dlgSeleccionarPersonaEmpresa"-->
-<!--              modal="true"-->
-<!--              width="800"-->
-<!--              height="500"-->
-<!--              resizable="false">-->
-
-<!--        <p:dataTable value="#{personaController.lista}"-->
-<!--                     var="p"-->
-<!--                     selectionMode="single"-->
-<!--                     selection="#{personaController.seleccionado}"-->
-<!--                     rowKey="#{p.idPersona}"-->
-<!--                     paginator="true"-->
-<!--                     rows="10"-->
-<!--                     rowsPerPageTemplate="5,10,20"-->
-<!--                     responsiveLayout="scroll">-->
-
-<!--            <p:column headerText="ID" sortBy="#{p.idPersona}">-->
-<!--                #{p.idPersona}-->
-<!--            </p:column>-->
-
-<!--            <p:column headerText="Nombre" filterBy="#{p.nombres}" filterMatchMode="contains">-->
-<!--                #{p.nombres} #{p.apellidos}-->
-<!--            </p:column>-->
-
-<!--            <p:column headerText="Documento" filterBy="#{p.nroDocumento}" filterMatchMode="contains">-->
-<!--                #{p.nroDocumento}-->
-<!--            </p:column>-->
-<!--        </p:dataTable>-->
-
-<!--        <f:facet name="footer">-->
-<!--            <p:commandButton value="Seleccionar"-->
-<!--                             icon="pi pi-check"-->
-<!--                             action="#{empresaController.seleccionarPersona(personaController.seleccionado)}"-->
-<!--                             update="@form"-->
-<!--                             oncomplete="PF('dlgSeleccionarPersonaEmpresa').hide()"/>-->
-<!--        </f:facet>-->
-<!--    </p:dialog>-->
-
+    </h:form>
 </ui:composition>
