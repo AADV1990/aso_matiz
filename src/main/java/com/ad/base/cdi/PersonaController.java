@@ -37,6 +37,8 @@ public class PersonaController extends AbstractControllerGenerico<Persona> imple
     private Persona personaSeleccionada;    // fila elegida en el diálogo
     private Object origen;                  // UsuarioController o EmpresaController
     private String formularioOrigen;        // opcional si lo usas visualmente
+    private String inputFieldId;           // opcional, si quieres usar un input específico en el diálogo
+
 
     // Filtros del diálogo
     private String filtroNombre;
@@ -223,27 +225,37 @@ public class PersonaController extends AbstractControllerGenerico<Persona> imple
     }
 
     private void aplicarSeleccionEnOrigen() {
-        if (personaSeleccionada == null) return;
+        if (personaSeleccionada == null) {
+            System.out.println("Error: personaSeleccionada es null");
+            return;
+        }
 
-        // UsuarioController (si lo usas)
         if (origen instanceof UsuarioController usuarioController) {
             try {
                 usuarioController.getUsuario().setPersona(personaSeleccionada);
-            } catch (Exception ignored) {}
-        }
-        // EmpresaController (tu caso actual)
-        else if (origen instanceof EmpresaController empresaController) {
+                System.out.println("Persona asignada a UsuarioController: " + personaSeleccionada.getNombres());
+            } catch (Exception e) {
+                System.out.println("Error al asignar persona a UsuarioController: " + e.getMessage());
+            }
+        } else if (origen instanceof EmpresaController empresaController) {
             try {
-                // Asigna la persona a la entidad empresa
                 empresaController.getEntidad().setRepresentanteLegal(personaSeleccionada);
-                // No llamamos a setNombreRepresentante (no existe). El input puede leer de:
-                // #{empresaController.nombreRepresentante}  -> tu getter calcula desde la entidad
-            } catch (Exception ignored) {}
+                System.out.println("Persona asignada a EmpresaController: " + personaSeleccionada.getNombres() + " " + personaSeleccionada.getApellidos());
+            } catch (Exception e) {
+                System.out.println("Error al asignar persona a EmpresaController: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Error: origen no es ni UsuarioController ni EmpresaController");
         }
 
-        // limpiar referencias del diálogo
+        // Limpiar referencias del diálogo
         personaSeleccionada = null;
         origen = null;
+    }
+
+    public void setFormularioOrigen(String formularioOrigen, String inputFieldId) {
+        this.inputFieldId = inputFieldId;
+        System.out.println("Formulario origen: " + formularioOrigen + ", Campo a actualizar: " + inputFieldId);
     }
 
     // import org.primefaces.event.SelectEvent;
@@ -266,6 +278,14 @@ public class PersonaController extends AbstractControllerGenerico<Persona> imple
 
     public String getFiltroDocumento() { return filtroDocumento; }
     public void setFiltroDocumento(String filtroDocumento) { this.filtroDocumento = filtroDocumento; }
+
+    public String getInputFieldId() {
+        return inputFieldId;
+    }
+
+    public void setInputFieldId(String inputFieldId) {
+        this.inputFieldId = inputFieldId;
+    }
 
     public LazyDataModel<Persona> getLazyListDetallePersonas() {
         if (lazyListDetallePersonas == null) inicializarLazy();

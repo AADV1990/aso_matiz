@@ -11,15 +11,18 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
 public class EmpresaController extends AbstractControllerGenerico<Empresa> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Boolean filtroActivo;
+    private boolean filtroActivo;
     private boolean modoEdicion;
+    private boolean filtroActivoSet = false; // Nuevo flag
 
     @Inject
     private EmpresaService empresaService;
@@ -29,21 +32,32 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
 
     private Empresa empresaSeleccionadaParaEliminar;
 
+
+    public boolean isFiltroActivoSet() {
+        return filtroActivoSet;
+    }
+
+
     @Override
     public GenericService<Empresa> getService() {
         return empresaService;
     }
 
+
     @Override
     public void reiniciarVista() {
         setEntidad(new Empresa());
-        setLista(empresaService.listarEmpresasConRepresentante());
+        List<Empresa> lista = empresaService.listarEmpresasConRepresentante();
+        if (lista == null) {
+            System.out.println("listaEmpresasConRepresentante devolvió null, inicializando como vacía");
+            lista = new ArrayList<>();
+        }
+        setLista(lista);
         setEnEdicion(false);
         setModoEdicion(false);
         empresaSeleccionadaParaEliminar = null;
+        this.filtroActivoSet = false; // Reinicia el flag del filtro
 
-        // Cargar la lista de personas para el diálogo;
-        // no limpiar la lista a null sino invocar reiniciarVista() del PersonaController
         if (personaController != null) {
             personaController.reiniciarVista();
         }
@@ -62,12 +76,19 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
     @Override
     public List<Empresa> getLista() {
         List<Empresa> todas = super.getLista();
-        if (filtroActivo == null) {
+        if (todas == null) {
+            System.out.println("Lista de empresas es null, inicializando como vacía");
+            todas = new ArrayList<>();
+            setLista(todas); // Actualiza la propiedad heredada
+        }
+        if (!isFiltroActivoSet()) {
+            System.out.println("filtroActivo no establecido, devolviendo todas las empresas");
             return todas;
         }
+        boolean filtro = filtroActivo;
         return todas.stream()
-                .filter(emp -> filtroActivo.equals(emp.getActivo()))
-                .toList();
+                .filter(emp -> filtro == emp.getActivo())
+                .collect(Collectors.toList());
     }
 
     public void cancelarEdicion() {
@@ -91,10 +112,6 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
         this.entidad.setRepresentanteLegal(persona);
     }
 
-    public void seleccionarPersonaDesdeDialogo() {
-        this.entidad.setRepresentanteLegal(personaController.getPersonaSeleccionada());
-
-    }
 
     public void nuevo() {
         this.entidad = new Empresa();
@@ -104,7 +121,12 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
 
     public String getNombreRepresentante() {
         Persona representante = this.entidad != null ? this.entidad.getRepresentanteLegal() : null;
-        return representante != null ? representante.getNombres() : "";
+        if (representante != null) {
+            String nombres = representante.getNombres() != null ? representante.getNombres() : "";
+            String apellidos = representante.getApellidos() != null ? representante.getApellidos() : "";
+            return nombres + " " + apellidos;
+        }
+        return "";
     }
 
     /* ======== Getters y Setters que siguen siendo necesarios ======== */
@@ -121,8 +143,9 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
         return filtroActivo;
     }
 
-    public void setFiltroActivo(Boolean filtroActivo) {
+    public void setFiltroActivo(boolean filtroActivo) {
         this.filtroActivo = filtroActivo;
+        this.filtroActivoSet = true; // Asegura que el flag se active al establecer el filtro
     }
 
     public boolean isModoEdicion() {

@@ -49,13 +49,13 @@
 
                     <!-- ✅ abre el diálogo correcto y marca origen -->
                     <p:commandButton icon="pi pi-search"
-                                     title="Buscar persona"
-                                     action="#{personaController.setFormularioOrigen(':abmForm:formEmpresa')}"
-                                     oncomplete="PF('dlgSeleccionarPersona').show()"
-                                     process="@this" update="@none">
-                        <f:setPropertyActionListener value="#{empresaController}"
-                                                     target="#{personaController.origen}" />
-                    </p:commandButton>
+                                      title="Buscar persona"
+                                      action="#{personaController.setFormularioOrigen(':abmForm:formEmpresa', ':abmForm:formEmpresa:personaInput')}"
+                                      oncomplete="PF('dlgSeleccionarPersona').show()"
+                                      process="@this" update="@none">
+                    <f:setPropertyActionListener value="#{empresaController}"
+                                                 target="#{personaController.origen}" />
+                </p:commandButton>
                 </div>
             </div>
         </div>

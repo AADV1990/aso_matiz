@@ -60,11 +60,13 @@
                                  readonly="true"
                                  styleClass="w-full"/>
                     <p:commandButton icon="pi pi-search"
-                                     value="Buscar"
-                                     action="#{personaController.setFormularioOrigen(':formUsuario')}"
+                                     title="Buscar persona"
+                                     action="#{personaController.setFormularioOrigen(':abmForm:formUsuario', ':abmForm:formUsuario:personaInput')}"
                                      oncomplete="PF('dlgSeleccionarPersona').show()"
-                                     process="@this"
-                                     update="@none"/>
+                                     process="@this" update="@none">
+                        <f:setPropertyActionListener value="#{usuarioController}"
+                                                     target="#{personaController.origen}" />
+                    </p:commandButton>
                 </div>
             </div>
 

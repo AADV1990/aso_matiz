@@ -25,7 +25,7 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "id_persona_representante", referencedColumnName = "id_persona")
     private Persona representanteLegal;
     @Column(name = "activa", nullable = false)
-    private Boolean activo;
+    private boolean activo;
 
     public int getId() {
         return id;
@@ -75,11 +75,11 @@ public class Empresa implements Serializable {
         this.representanteLegal = persona;
     }
 
-    public Boolean getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(Boolean activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 }
