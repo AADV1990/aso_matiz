@@ -35,7 +35,7 @@ public class UsuarioController implements Serializable {
     private Long idRolSeleccionado;
     private Integer idPersonaSeleccionada;
 
-    private Persona personaSeleccionada; // 🔹 NUEVO: para usar con el diálogo
+    private Persona personaSeleccionada; // 🔹 para usar con el diálogo
 
     private boolean mostrarFormulario = false;
     private Usuario usuarioAEliminar;
@@ -114,7 +114,6 @@ public class UsuarioController implements Serializable {
             return;
         }
 
-
         // Asignar Rol
         if (idRolSeleccionado != null) {
             for (RolUsuario rol : listaRoles) {
@@ -191,6 +190,17 @@ public class UsuarioController implements Serializable {
 
     private void cargarPersonas() {
         listaPersonas = personaService.listarPersonas();
+    }
+
+    // === Alias para el composite: 'enEdicion' mapea a 'mostrarFormulario' ===
+    public boolean isEnEdicion() {          // usado por #{...enEdicion}
+        return mostrarFormulario;
+    }
+    public boolean getEnEdicion() {         // por si EL invoca getter explícito
+        return mostrarFormulario;
+    }
+    public void setEnEdicion(boolean enEdicion) {
+        this.mostrarFormulario = enEdicion;
     }
 
     // GETTERS Y SETTERS
