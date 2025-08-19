@@ -16,6 +16,11 @@
         <param-value>arya</param-value> <!-- Podés cambiar por otro si querés -->
     </context-param>
 
+    <context-param>
+        <param-name>javax.faces.LOGGING_LEVEL</param-name>
+        <param-value>FINER</param-value>
+    </context-param>
+
     <!-- Forzar modo de desarrollo si estás en local -->
     <context-param>
         <param-name>jakarta.faces.PROJECT_STAGE</param-name>
@@ -38,5 +43,6 @@
     <welcome-file-list>
         <welcome-file>pages/login.xhtml</welcome-file>
     </welcome-file-list>
+
 
 </web-app>

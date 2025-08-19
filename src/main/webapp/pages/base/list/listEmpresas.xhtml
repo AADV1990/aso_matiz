@@ -43,32 +43,31 @@
         </p:column>
 
         <p:column headerText="Persona Representante"
-                  sortBy="#{empresa.persona}"
-                  filterBy="#{empresa.persona}"
+                  sortBy="#{empresa.representanteLegal}"
+                  filterBy="#{empresa.representanteLegal}"
                   filterMatchMode="contains">
             #{empresa.representanteLegal.nombres} #{empresa.representanteLegal.apellidos}
         </p:column>
         <p:column headerText="Activo"
                   sortBy="#{empresa.activo}"
                   filterBy="#{empresa.activo}"
-                  filterMatchMode="exact">
+                  filterMatchMode="exact"
+                  filterValue="#{empresaController.filtroActivo}"> <!-- ← ENLACE CLAVE -->
 
             <f:facet name="filter">
                 <p:selectOneMenu value="#{empresaController.filtroActivo}" style="width:100%">
-                    <f:selectItem itemLabel="Todos" itemValue="#{null}" />
-                    <f:selectItem itemLabel="Activo" itemValue="true" />
-                    <f:selectItem itemLabel="Inactivo" itemValue="false" />
-                    <p:ajax update="@form" process="@this"/>
+                    <f:selectItem itemLabel="Todos" itemValue="#{null}"/>
+                    <f:selectItem itemLabel="Activo" itemValue="#{true}"/>
+                    <f:selectItem itemLabel="Inactivo" itemValue="#{false}"/>
+                    <p:ajax update="tablaEmpresa" process="@this"/> <!-- actualizá la tabla -->
                 </p:selectOneMenu>
             </f:facet>
 
             <h:panelGroup>
                 <i class="#{empresa.activo ? 'pi pi-check-circle text-success' : 'pi pi-times-circle text-danger'}"></i>
-                <h:outputText value="#{empresa.activo ? 'Activo' : 'Inactivo'}" style="margin-left:.5rem" />
+                <h:outputText value="#{empresa.activo ? 'Activo' : 'Inactivo'}" style="margin-left:.5rem"/>
             </h:panelGroup>
         </p:column>
-
-
 
 
         <!-- Acciones -->
@@ -84,7 +83,7 @@
                              title="Eliminar"
                              actionListener="#{empresaController.eliminar(empresa)}"
                              update="@form"
-                             oncomplete="PF('dlgEliminarPersona').show()"
+                             oncomplete="PF('dlgEliminarEmpresa').show()"
                              process="@this"
                              styleClass="ui-button-danger ui-button-flat"/>
         </p:column>

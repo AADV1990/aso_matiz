@@ -6,6 +6,7 @@ import com.ad.Generico.GenericService;
 import com.ad.base.ejb.EmpresaService;
 import com.ad.base.modelo.Empresa;
 import com.ad.base.modelo.Persona;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -13,16 +14,15 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
 public class EmpresaController extends AbstractControllerGenerico<Empresa> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private boolean filtroActivo;
+    private Boolean filtroActivo;
     private boolean modoEdicion;
-    private boolean filtroActivoSet = false; // Nuevo flag
+    private boolean filtroActivoSet = false; // se puede remover más adelante si ya no lo usás
 
     @Inject
     private EmpresaService empresaService;
@@ -32,35 +32,33 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
 
     private Empresa empresaSeleccionadaParaEliminar;
 
-
     public boolean isFiltroActivoSet() {
         return filtroActivoSet;
     }
-
 
     @Override
     public GenericService<Empresa> getService() {
         return empresaService;
     }
 
-
     @Override
     public void reiniciarVista() {
+        // Evita reiniciar en cualquier postback/AJAX
+        if (FacesContext.getCurrentInstance().isPostback()) {
+            return;
+        }
+
         setEntidad(new Empresa());
         List<Empresa> lista = empresaService.listarEmpresasConRepresentante();
-        if (lista == null) {
-            System.out.println("listaEmpresasConRepresentante devolvió null, inicializando como vacía");
-            lista = new ArrayList<>();
-        }
+        if (lista == null) lista = new ArrayList<>();
         setLista(lista);
+
         setEnEdicion(false);
         setModoEdicion(false);
         empresaSeleccionadaParaEliminar = null;
-        this.filtroActivoSet = false; // Reinicia el flag del filtro
 
-        if (personaController != null) {
-            personaController.reiniciarVista();
-        }
+        filtroActivo = null;  // si usás el filtro en la tabla
+        if (personaController != null) personaController.reiniciarVista();
     }
 
     @Override
@@ -77,23 +75,23 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
     public List<Empresa> getLista() {
         List<Empresa> todas = super.getLista();
         if (todas == null) {
-            System.out.println("Lista de empresas es null, inicializando como vacía");
             todas = new ArrayList<>();
-            setLista(todas); // Actualiza la propiedad heredada
+            setLista(todas);
         }
-        if (!isFiltroActivoSet()) {
-            System.out.println("filtroActivo no establecido, devolviendo todas las empresas");
-            return todas;
-        }
-        boolean filtro = filtroActivo;
-        return todas.stream()
-                .filter(emp -> filtro == emp.getActivo())
-                .collect(Collectors.toList());
+        return todas;
     }
 
+    // ====== 👇 CAMBIO IMPORTANTE: Cancelar sin reiniciarVista() 👇 ======
     public void cancelarEdicion() {
-        reiniciarVista();
+        // Salir de edición y volver a lista sin relanzar init
+        setEnEdicion(false);
+        setModoEdicion(false);
+        setEntidad(new Empresa());                 // limpia el formulario
+        empresaSeleccionadaParaEliminar = null;    // limpia selección de eliminar
+        // si querés, también podés limpiar selección de persona:
+        // if (personaController != null) personaController.limpiarSeleccion();
     }
+    // ====== 👆 CAMBIO IMPORTANTE 👆 ======
 
     public void prepararEdicion(Empresa empresa) {
         setEntidad(empresa);
@@ -112,7 +110,6 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
         this.entidad.setRepresentanteLegal(persona);
     }
 
-
     public void nuevo() {
         this.entidad = new Empresa();
         this.modoEdicion = true;
@@ -129,7 +126,7 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
         return "";
     }
 
-    /* ======== Getters y Setters que siguen siendo necesarios ======== */
+    /* ======== Getters y Setters ======== */
 
     public Empresa getEmpresaSeleccionadaParaEliminar() {
         return empresaSeleccionadaParaEliminar;
@@ -143,9 +140,9 @@ public class EmpresaController extends AbstractControllerGenerico<Empresa> imple
         return filtroActivo;
     }
 
-    public void setFiltroActivo(boolean filtroActivo) {
+    public void setFiltroActivo(Boolean filtroActivo) {
         this.filtroActivo = filtroActivo;
-        this.filtroActivoSet = true; // Asegura que el flag se active al establecer el filtro
+        this.filtroActivoSet = true;
     }
 
     public boolean isModoEdicion() {

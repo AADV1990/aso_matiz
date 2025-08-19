@@ -8,8 +8,9 @@
 
     <ui:define name="content">
         <f:metadata>
-            <f:viewAction action="#{empresaController.reiniciarVista()}" />
+            <f:viewAction action="#{empresaController.reiniciarVista()}" onPostback="false" />
         </f:metadata>
+
 
         <comp:formPrincipalBase
                 controlador="#{empresaController}"

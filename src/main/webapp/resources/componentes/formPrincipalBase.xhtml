@@ -17,54 +17,60 @@
 
     <composite:implementation>
 
-        <h:form id="form" style="width: 100%" enctype="multipart/form-data">
+        <h:form id="form" style="width:100%" enctype="multipart/form-data">
             <p:growl id="growl" showDetail="true" life="5000" />
 
-            <!-- Título con acciones -->
-            <p:toolbar style="margin-bottom: 1rem">
+            <!-- Barra superior con título y acciones -->
+            <p:toolbar id="toolbar" style="margin-bottom:1rem">
                 <p:toolbarGroup align="left">
-                    <h2 style="margin: 0">
-                        <i class="#{cc.attrs.icono}" style="margin-right: 0.5rem" />
+                    <h2 style="margin:0">
+                        <i class="#{cc.attrs.icono}" style="margin-right:.5rem" />
                         #{cc.attrs.nombreForma}
                     </h2>
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right">
-                    <!-- Botón Nuevo -->
+                    <!-- Botón Nuevo (solo cuando NO está en edición) -->
                     <p:commandButton icon="pi pi-plus"
                                      value="Nuevo"
                                      action="#{cc.attrs.controlador.nuevo}"
-                                     update="@form"
-                                     rendered="#{!cc.attrs.controlador.mostrarFormulario}" />
+                                     process="@this"
+                                     update="zonaABM toolbar"
+                                     rendered="#{!cc.attrs.controlador.enEdicion}" />
 
-                    <!-- Botones Formulario -->
+                    <!-- Botón Guardar (solo en edición) -->
                     <p:commandButton icon="pi pi-save"
                                      value="Guardar"
                                      action="#{cc.attrs.controlador.guardar}"
-                                     update="@form growl"
-                                     rendered="#{cc.attrs.controlador.mostrarFormulario}" />
+                                     process="@form"
+                                     update="zonaABM toolbar growl"
+                                     rendered="#{cc.attrs.controlador.enEdicion}" />
 
+                    <!-- Botón Cancelar (solo en edición) -->
                     <p:commandButton icon="pi pi-times"
                                      value="Cancelar"
                                      action="#{cc.attrs.controlador.cancelarEdicion}"
-                                     update="@form"
-                                     rendered="#{cc.attrs.controlador.mostrarFormulario}"
-                                     immediate="true" />
+                                     process="@this"
+                                     update="zonaABM toolbar"
+                                     rendered="#{cc.attrs.controlador.enEdicion}"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <!-- Tabla -->
-            <p:panel id="panelTabla" rendered="#{!cc.attrs.controlador.mostrarFormulario}">
-                <ui:include src="#{cc.attrs.dataTable}" />
-            </p:panel>
+            <!-- Contenedor conmutado: lista vs formulario -->
+            <p:outputPanel id="zonaABM" deferred="true" deferredMode="visible">
+                <!-- Tabla -->
+                <ui:fragment rendered="#{!cc.attrs.controlador.enEdicion}">
+                    <ui:include src="#{cc.attrs.dataTable}" />
+                </ui:fragment>
 
-            <!-- Formulario -->
-            <p:panel id="panelFormulario" rendered="#{cc.attrs.controlador.mostrarFormulario}">
-                <div class="card contenido-centrado">
-                    <h2 class="mb-4">#{cc.attrs.nombreForma}</h2>
-                    <ui:include src="#{cc.attrs.abmForm}" />
-                </div>
-            </p:panel>
+                <!-- Formulario -->
+                <ui:fragment rendered="#{cc.attrs.controlador.enEdicion}">
+                    <div class="card contenido-centrado">
+                        <h2 class="mb-4">#{cc.attrs.nombreForma}</h2>
+                        <ui:include src="#{cc.attrs.abmForm}" />
+                    </div>
+                </ui:fragment>
+            </p:outputPanel>
 
             <!-- Diálogo opcional -->
             <ui:fragment rendered="#{not empty cc.attrs.dlgForm}">
